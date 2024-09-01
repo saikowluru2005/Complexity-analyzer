@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Complexity Analyzer</title>
+</head>
+
+<body>
+    <h1>Code Complexity Analyzer</h1>
+    <form id="codeForm">
+        <textarea id="codeInput" placeholder="Enter your code here..." rows="10" cols="50"></textarea><br>
+        <button type="submit">Analyze</button>
+    </form>
+    <div id="output">
+        <!-- Complexity results will be shown here -->
+    </div>
+
+    <script>
+        document.getElementById('codeForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const code = document.getElementById('codeInput').value;
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code
+                })
+            });
+            const result = await response.json();
+            document.getElementById('output').innerText = `Time Complexity: ${result.time}\nSpace Complexity: ${result.space}`;
+        };
+    </script>
+</body>
+
+</html>
